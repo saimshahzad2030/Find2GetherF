@@ -1,0 +1,86 @@
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    
+}
+.row{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 80%;
+    margin-top: 20px;
+    height: auto;
+    padding-bottom:5px;
+    padding-top: 5px;
+}
+.row>*{
+    margin-left: 20px;
+}
+.field{
+        width: 30%;
+        margin-left: 20px
+
+}
+@media only screen and (max-width:600px) {
+
+
+    .row{
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        width: 90%;
+        margin-top: 20px;
+        height: auto;
+        padding-bottom:5px;
+        padding-top: 5px;
+        margin-left: 20px;
+    }
+    .row>*{
+        margin-left: 3%;
+        margin-top: 20px;
+    }
+    .field{
+        width: 90%;
+        margin-bottom: 20px;
+        
+    }
+}
+
+.imagePreviewRow{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    
+    
+    
+}
+.buttonRow{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.buttonRow{
+    margin-left: 20px;
+}
+
+
+.tableRow{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+   
+}
+.imageRow{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    
+}

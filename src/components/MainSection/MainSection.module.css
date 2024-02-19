@@ -1,0 +1,88 @@
+.mainDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    padding-top: 50px;
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    transition: opacity 0.5s ease-in-out;
+}
+.insideDiv{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    padding-top:50px ;
+    padding-bottom: 50px;
+width: 100%;
+}
+.divChild > *{
+    margin-top: 20px;
+}
+.divChild{
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+    height: 380px;
+}
+.paraDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-right: 10%;
+    padding-left: 10%;
+}
+.h3{
+    text-align: center;
+    font-weight: bold;
+}
+.paraDiv >p{
+    text-align: center;
+
+}
+.img{
+    width: 80px;
+}
+.imgDiv{
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+background-color:   rgb(0, 51, 102);
+border-radius: 50%;
+padding: 30px;
+}
+.parentDiv{
+    height: auto;
+    padding: 20px;
+    width :40%;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid grey;
+    border-radius: 4px;
+}
+
+@media only screen and (max-width:780px){
+.insideDiv{
+    flex-direction: column;
+    justify-content: space-between;
+}
+.insideDiv>*{
+    margin-top: 40px;
+}
+.parentDiv{
+    width: 80%;
+}
+.divChild{
+    height: auto;
+}
+}

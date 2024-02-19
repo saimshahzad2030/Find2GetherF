@@ -1,0 +1,85 @@
+.mainDiv{
+    width: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.parent-div {
+    width: 300px;
+    height: 200px;
+    overflow: hidden; /* Set overflow to hidden */
+    position: relative; /* Optional: Allows positioning of child elements */
+  }
+
+  .mobilePic {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+.mainDiv > h1{
+
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.child > * {
+    width: 40%;
+    height: auto;
+    
+}
+.child1{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+}
+.listCollection{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+}
+.child1 > h2{
+    font-family: cursive;
+    color: rgb(0, 51, 102) ;
+}
+.list{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0;
+    margin-top: 5px;
+}
+.list > h4{
+    font-family: cursive;
+    margin: 0;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    margin-left: 20px;
+}
+.tick{
+    width: 25px;
+}
+.child{
+    width: 100%;
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+@media only screen and (max-width:670px) {
+    .child{
+        flex-direction: column;
+    }
+    .child > *{
+        width: 100%;
+    }
+}
+.downloadApp{
+    width: 200px;
+}

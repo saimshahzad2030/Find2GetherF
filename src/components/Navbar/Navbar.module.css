@@ -1,0 +1,176 @@
+.nav{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    background-color:aliceblue;
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* Adjust as needed */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .navbar.scrolled {
+    /* background-color: aliceblue; */
+    box-shadow: 0 4px 6px rgba(167, 163, 163, 0.1);
+  }
+.hideButton{
+    display: none;
+}
+.logoDiv{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+}
+.linkDiv{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+.logo{
+    width: 200px;
+}
+.links > li {
+    transition: margin-bottom 0.3s ease; /* Adding smooth transition for margin-bottom */
+  }
+  
+  .links > li:hover {
+    margin-bottom: 10px;
+  }
+  
+  .links li > .link {
+    transition: font-size 0.3s ease; /* Adding smooth transition for font-size */
+  }
+  
+  .links li > .link:hover {
+    font-size: 28px;
+  }
+  .insideList{
+    display: none;
+  }
+.nav_ul{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    
+  }
+  .linkDiv{
+    width: 70%;
+  }
+  
+.links{
+    /* background-color: aqua; */
+    padding: 0;
+  }
+ 
+  .nav_ul> li {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  }
+  .links>*{
+  margin-left: 25px;
+  text-decoration: none;
+  }
+  .link{
+  text-decoration: none;
+  font-size: 22px;
+  font-weight: bold;
+  color: rgb(0, 51, 102);
+  }
+  .link:hover + .navbar {
+    background-color: aqua;
+  }
+  .linkUnderline{
+    width: 100%;
+    height:4px;
+    background-color: aquamarine;
+    display: none;
+  }
+  @media only screen and (min-width:890px) and (max-width:1100px) {
+.link{
+  font-size: 20px;
+}
+.linkDiv{
+  width: 80%;
+}
+.links > *{
+  margin-left: 15px;
+}
+.logo{
+  width: 120px;
+}
+  }
+  @media only screen and (min-width:810px) and (max-width:890px) {
+    .linkDiv{
+      width: 80%;
+     justify-content: flex-end;
+    }
+    .links > *{
+      margin-left: 15px;
+    }
+    .logoDiv{
+      width: 10%;
+    }
+    .logo{
+      width: 120px;
+    }
+    .link{
+      font-size: 18px;
+    }
+  }
+  
+  @media only screen and (min-width:760px) and (max-width:810px) {
+    .linkDiv{
+      width: 80%;
+     justify-content: flex-end;
+    }
+    .links > *{
+      margin-left: 15px;
+    }
+    .logoDiv{
+      width: 10%;
+    }
+    .logo{
+      width: 120px;
+    }
+    .link{
+      font-size: 14px;
+    }
+  }
+  @media only screen and  (max-width:760px) {
+    .linkDiv{
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-evenly;
+      width: 100%;
+      background-color: aliceblue;
+    }
+    .logoDiv{
+      width: 90%;
+      justify-content: space-between;
+    }
+    .hideButton{
+      display: flex;
+    }
+    .nav{
+      flex-direction: column;
+    }
+    .nav_ul{
+      flex-direction: column;
+    }
+    .nav_ul > * {
+      margin-top: 20px;
+    }
+    .link{
+      font-size: 30px;
+    }
+  }
+
+ 
