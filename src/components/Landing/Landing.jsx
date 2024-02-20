@@ -63,7 +63,7 @@ const textRef = useRef(null)
         <h2  className={style.h2}> We are here for you </h2>
         <p className={style.p} ref={textRef}>{texts[currentTextIndex]}</p>
       <div className={style.btnDiv}>
-        <Link to={'/'}><button className={style.btn} >Get started</button></Link>
+        <Link to={'/explore'}><button className={style.btn} >Get started</button></Link>
       </div>
       </div>
       <div className={style.secondChild}>

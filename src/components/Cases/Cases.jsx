@@ -143,7 +143,7 @@ useEffect(()=>{
 const suspectRows = [
     createData('Id', caseSelected._id),
     createData('Name', caseSelected.name),
-    createData('Father name', caseSelected.fatherName?caseSelected.fatherName:'not specified'),
+    createData('Father name', caseSelected.fName?caseSelected.fName:'not specified'),
     createData('Phone No', caseSelected.contact),
     createData('City', caseSelected.city),
     createData('Adress', caseSelected.address),
@@ -283,7 +283,7 @@ function createData(type,value) {
 const missingCaseRows = [
     createData('Id', caseSelected._id),
     createData('Name', caseSelected.name),
-    createData('Father name', caseSelected.fatherName),
+    createData('Father name', caseSelected.fName),
     createData('Phone No', caseSelected.contact),
     createData('City', caseSelected.city),
     createData('Adress', caseSelected.area),
@@ -297,7 +297,7 @@ const missingCaseRows = [
     <>
     {(suspects && missings && missingGroups && suspectGroups) && <div className={style.mainCol} style={{display:caseClicked?'none':'flex'}}>
         <div className={style.child1}>
-            <h1>All Cases</h1>
+            <h1 >All Cases</h1>
         </div>
         <div className={style.child2}>
         <Box sx={{ width: '100%',display:'flex', flexDirection:'column', alignItems:'center'}}>
@@ -322,11 +322,11 @@ const missingCaseRows = [
         <div className={style.suspectChild2}>
             <p className={style.suspectHeading}>{suspect.name}</p>
             <div className={style.detailsRow}>
-                <div style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+                <div style={{display:'flex',flexDirection:'row',alignItems:'center',fontFamily:'calibri'}}>
                     <p className={style.suspectRowTitle}>Found from: </p>
                     <p className={style.suspectRowDefinition}> {suspect.address}, {suspect.city}</p> 
                 </div>
-                <div style={{display:'flex',flexDirection:'row',alignItems:'center'}}>  
+                <div style={{display:'flex',flexDirection:'row',alignItems:'center',fontFamily:'calibri'}}>  
                     <p className={style.suspectRowTitle}>Reported by: </p>
                     <p className={style.suspectRowDefinition}>{suspect.reportedBy}</p>
                 </div>
@@ -380,7 +380,7 @@ const missingCaseRows = [
             <div className={style.detailsRow}>
             <div style={{display:'flex',flexDirection:'row',alignItems:'center'}}>  
                     <p className={style.suspectRowTitle}>Father name: </p>
-                    <p className={style.suspectRowDefinition}>{missing.fatherName}</p>
+                    <p className={style.suspectRowDefinition}>{missing.fName}</p>
                 </div>
                 <div style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
                     <p className={style.suspectRowTitle}>Missed from: </p>

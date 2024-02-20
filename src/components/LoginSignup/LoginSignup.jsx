@@ -250,7 +250,8 @@ useEffect(()=>{
                  setfirstname(response.data.firstname)
                  localStorage.setItem('token', JSON.stringify(response.data.token));
                  localStorage.setItem('username', JSON.stringify(response.data.username));
-                
+                 localStorage.setItem('firstname', JSON.stringify(response.data.firstname));
+                 
                 }
               })
               .catch(error => {
@@ -280,6 +281,8 @@ useEffect(()=>{
                    console.log(response.data)
                    localStorage.setItem('token', JSON.stringify(response.data.token));
                    localStorage.setItem('username', JSON.stringify(response.data.username));
+                   
+                 localStorage.setItem('firstname', JSON.stringify(response.data.firstname));
                   }
                 })
                 .catch(error => {

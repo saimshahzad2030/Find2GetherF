@@ -37,7 +37,7 @@ export default function FindingSomeone() {
 const [areaValue,setAreaValue] = useState('')
 const [mentalCondition,setMentalCondition] = useState('')
 const [dateValue,setDateValue] = useState('')
-const [selectedFile, setSelectedFile] = useState([]);
+const [selectedFile, setSelectedFile] = useState(null);
 // const [reportedBy,setReportedBy]=useState(null);
 const [loadingToken, setLoadingToken] = useState(false);
 const [caseSubmitted,setCaseSubmitted]=useState(false)
@@ -218,22 +218,20 @@ const handleFileChange = (event) => {
       } 
       
       else {
+        setSelectedFile(null)
         // File is either missing or exceeds size limit, handle accordingly
         setErrors((prevErrors) => ({
             ...prevErrors,
             file: 'file size must be less than 5mb'
         }));
       }
-    console.log(selectedFile)
+    // console.log(selectedFile)
 
     // Automatically trigger the upload
   
   };
-  const handleRemove = (index) => {
-    const newFiles = [...selectedFile];
-    newFiles.splice(index, 1);
-    setSelectedFile(newFiles);
-  };
+
+
 
 
     //date picker
@@ -377,7 +375,7 @@ const handleFileChange = (event) => {
                 }));
             }
             
-            if(selectedFile.length === 0){
+            if(selectedFile === null){
                 setBtnDisabled(true)
                 
             }
@@ -385,7 +383,7 @@ const handleFileChange = (event) => {
                 setBtnDisabled(true)
                 
             }
-             if(selectedFile.length !== 0 && nameOfMissingOne !== '' && fatherNameValue  !== '' && contactValue  !== '' && ageValue !== '' && areaValue !== '' && mentalCondition !== '' && dateValue !== '' && cityValue  !== ''  &&errors.file===''){
+             if(selectedFile!==null && nameOfMissingOne !== '' && fatherNameValue  !== '' && contactValue  !== '' && ageValue !== '' && areaValue !== '' && mentalCondition !== '' && dateValue !== '' && cityValue  !== ''  &&errors.file===''){
                 
                setBtnDisabled(false) 
             }
@@ -662,26 +660,20 @@ as={TextField}
                         style={
                             {display:nextClicked===true && loadingToken===false?'':'none'}
                         }>Case 123</h1>
-<div className={nextClicked === true?style.imageRow:style.row}>
-
-       
-          <div  className={style.imagePreviewRow}>
-          {selectedFile[0] && (
-        <img
-          src={URL.createObjectURL(selectedFile)} // Create object URL from selected file
-          alt={`Preview`}
-          style={{ maxWidth: '200px', maxHeight: 'auto', marginRight: '10px' }}
-        />
-      )}
-            <button onClick={() => handleRemove()
-            
-            }
-            style={{display:nextClicked === true?'none':''}}
-            >Remove</button>
-          </div>
-       
+ <div className={style.imagePreviewRow} style={{display:nextClicked===true && loadingToken===false?'flex':'none'}}>
+      {selectedFile && (
+  <img
+    src={URL.createObjectURL(selectedFile)} // Create object URL from selected file
+    alt={`Preview`}
+    style={{ maxWidth: '200px', maxHeight: 'auto', marginRight: '10px' }}
+  />
+)}
+          
+    
+        
       
 </div>
+
 
 <div className={style.tableRow} 
 style={{

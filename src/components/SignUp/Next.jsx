@@ -58,6 +58,13 @@ useEffect(() => {
 
 const handleChange = (event) => {
         setIsChecked(event.target.checked);
+        console.log(!isChecked)
+        if(!isChecked===false){
+          setBtnDisabled(true)
+        }
+        else{
+          setBtnDisabled(false)
+        }
        termsColor === 'grey'?setTermsColor('black'):setTermsColor('grey')
     };
 
@@ -72,7 +79,7 @@ const handleChangeFirstName = (e)=>{
 
   
     // Use a regular expression to check if the input contains only letters
-    if (/^[A-Za-z]+$/.test(value) || value === '') {
+    if (/^[A-Za-z\s]+$/.test(value) || value === '') {
       setFirstNameValue(value);
       
 }
@@ -82,7 +89,7 @@ const handleChangeLastName = (e)=>{
   const value = e.target.value;
 
     // Use a regular expression to check if the input contains only letters
-    if (/^[A-Za-z]+$/.test(value) || value === '') {
+    if (/^[A-Za-z\s]+$/.test(value) || value === '') {
     
       setLastNameValue(value)
 }
@@ -241,13 +248,7 @@ useEffect(()=>{
        
        setBtnDisabled(true)
      }
-     else if(passwordValue){
-      setPasswordErrors({
-        
-        password:''
-       })
-       setBtnDisabled(false)
-     }
+     
      if(passwordValue.length <6 && passwordValue.length>1){
       setPasswordErrors(prevErrors=>({
         ...prevErrors,
@@ -256,12 +257,12 @@ useEffect(()=>{
      
        setBtnDisabled(true)
  }
- else if(passwordValue.length>=6){
-  setPasswordErrors({
-    
+ if(passwordValue !== "" && passwordValue.length>5 && !isChecked){
+  setPasswordErrors(prevErrors=>({
+    ...prevErrors,
     password:''
-   })
-   
+   }))
+ 
    setBtnDisabled(false)
  }
 },[passwordValue])
@@ -370,7 +371,7 @@ useEffect(()=>{
            
           
          {( tokenMatch ) && (<Alert severity="success"  onClose={() => setIsResponseSubmitted(false)} sx={{display:next === true && verify === true && tokenMatch  === true?'':'none'}}>{emailValue} Verified</Alert>)}
-        
+        {<><p style={{fontSize:'24px',display:next ===true && verify === true && next2 === true && signupClicked === false?'':'none'}}>Enter Pass</p></>}
         {(isResponseSubmitted) && (<Alert severity="success"  onClose={() => setIsResponseSubmitted(false)} sx={{}}>Succesfully Logged In!</Alert>)}
        {<p style={{  display: (next ===false && verify === false && signupClicked === false)?'':'none'
             }}>Note: You should have logged in to access additional features of appplications</p>}
@@ -743,7 +744,7 @@ setTokenMatch(true)
             </Button>
             
             <Button variant="contained" 
-             disabled={( btnDisabled || !isChecked )}
+             disabled={( btnDisabled  )}
              onClick={()=>{
             
               setSignupClicked(true)
@@ -771,6 +772,7 @@ setTokenMatch(true)
             <Button type='submit' variant="contained" 
              disabled={( btnDisabled  )}
              onClick={()=>{
+              
             axios.post('http://localhost:3333/user/signup',
               {email:emailValue,
                 username:usernameValue,
@@ -784,15 +786,28 @@ setTokenMatch(true)
                 },
               })
                 .then(response => {
-               if(response.status === 200){
+               if(response.status ===200){
                 setLoggedIn(true);
-                setFirstname(firstnameValue)
                 setSignupClicked(true)
                 setNext(false)
                 setVerify(false)
                 setnext2(false)
-               }
+                console.log('firstname:',firstnameValue)
+                console.log('firstname:',emailValue)
+                console.log('firstname:',usernameValue)
+                console.log('firstname:',lastnameValue)
+                console.log('firstname:',passwordValue)
+                
+                localStorage.setItem('username',JSON.stringify(usernameValue))
+                localStorage.setItem('firstname',JSON.stringify(firstnameValue))
+                localStorage.setItem('token', JSON.stringify(response.data.token));
               
+                  console.log('response200:',response.data)
+                  // setFirstname(firstnameValue)
+                 }
+              else{
+                console.log('responsenot200:',response.data)
+              }
                 })
                 .catch(error => {
                   if(error.response && error.response.status !== 200){
@@ -802,7 +817,7 @@ setTokenMatch(true)
                      alert(error.response.data.message)
                   }
                   console.error('Error:', error);
-                });
+                })
                  
             
           

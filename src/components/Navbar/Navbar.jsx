@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useRef } from 'react'
 import style from './Navbar.module.css'
 import { Link } from 'react-router-dom';
 import { Button ,Avatar} from '@mui/material';
@@ -7,9 +7,45 @@ import axios from 'axios';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import IconButton from '@mui/material/IconButton';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { upload } from '@testing-library/user-event/dist/upload';
-export default function Navbar({setType,reference,scrollToSection,scrollToTop,loggedIn,firstname,setLoggedIn ,setNext, setVerify ,setnext2 }) {
+
+
+
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+export default function Navbar({setType,scrollToSection,scrollToTop,loggedIn,firstname,setLoggedIn ,setNext, setVerify ,setnext2 }) {
   const [uploadedCases,setUploadeCases]=useState([])  
+  const reference = useRef(null)
+  const [open, setOpen] = React.useState(false);
+
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  useEffect(()=>
+  {
+    const handleResize = ()=>{
+      const screenWidth = window.innerWidth;
+    if (screenWidth >= 750) {
+      reference.current.style.display = 'flex';
+    } else {
+      reference.current.style.display = 'none'; // or any other desired style
+    }
+    
+    }
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup on component unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [reference])
   useEffect(()=>{
     axios.get('http://localhost:3333/user/allUploadedCases',{
       params: {
@@ -94,7 +130,7 @@ export default function Navbar({setType,reference,scrollToSection,scrollToTop,lo
   return (
    <nav className={`${style.nav} ${scrolled ? style.scrolled : ''}`}>
     <div className={style.logoDiv}>
-        <Link  to={'/'}>  <img className={style.logo} src={process.env.PUBLIC_URL + '/Assets/logo/logo.png'} alt="Logo" />
+        <Link  to={'/'}>  <img className={style.logo} src={process.env.PUBLIC_URL + '/Assets/logo/logo2.png'} alt="Logo" />
        </Link>
        <button className={style.hideButton} onClick={clickHandler}>
         <FaBars size={30} />
@@ -251,8 +287,10 @@ export default function Navbar({setType,reference,scrollToSection,scrollToTop,lo
         </div>
         
           <div>
-          <Link to={'/'} onClick={() => { scrollToTop(); scrollToSection(`login`); setLoggedIn(false);localStorage.removeItem('username');localStorage.removeItem('token'); }}>
-        <Button variant="outlined" 
+           <Button variant="outlined" 
+           onClick={()=>{
+            setOpen(true)
+           }}
         sx={{
            margin: '15px',
             fontWeight: 'bold',
@@ -260,8 +298,38 @@ export default function Navbar({setType,reference,scrollToSection,scrollToTop,lo
               border: '2px red solid',
                width: '120px' 
                }}>Log out</Button>
-      </Link>
+               
+  
           </div>
+          <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Dou you want to Log out?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            You will no longer be able to avail any service till you login again. Do you wanna logout?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} variant="outlined" sx={{ fontWeight: 'bold', color: 'blue', border: '2px rgb(0,51,140) solid', width: '140px', marginTop: '25px', marginBottom: '20px' }}
+               >Cancel</Button>
+                <Link to={'/'} onClick={() => { scrollToTop(); scrollToSection(`login`); setLoggedIn(false);localStorage.removeItem('username');localStorage.removeItem('token');localStorage.removeItem('firstname'); }}>
+      
+          <Button onClick={()=>{
+           
+          handleClose();
+          }} variant="outlined" sx={{ fontWeight: 'bold', color: 'red', border: '2px red solid', width: '140px', marginTop: '25px', marginBottom: '20px' }}
+                autoFocus>
+            Logout
+          </Button>
+          </Link>
+        </DialogActions>
+      </Dialog>
           {/* Add other content here */}
         </div>
       </SwipeableDrawer>
