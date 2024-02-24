@@ -22,6 +22,7 @@ import FindingSomeone from "./components/FindingSomeone(Uploader)/FindingSomeone
 import FoundSomeone from "./components/FoundSomeone/FoundSomeone"
 import Cases from "./components/Cases/Cases";
 import PersonalCase from "./components/PeronalCase/PersonalCase";
+import DummyComponent from './components/DummyComponent/DummyComponent';
 import axios from "axios";
 function App() {
   const [type,setType] = useState('login')
@@ -29,6 +30,7 @@ function App() {
   const [isEffectApplied, setIsEffectApplied] = useState(false);
   const [isRowEffectApplied, setIsRowEffectApplied] = useState(false);
   const [forgotPass,setForgetPass] = useState(false)
+const [loading,setLoading]=useState(true)
   
   const [firstname,setFirstname] = useState(' ');
   const [loggedIn,setLoggedIn] = useState(false);
@@ -40,7 +42,7 @@ const [verify,setVerify]=useState(false)
 const [next2,setnext2] = useState(false)
 //
 const [showScreen, setScreen] = useState(false);
-
+const [uploadedCases ,setUploadeCases]=useState([])
 useEffect(() => {
   // Set a timer for 3 seconds
   const timer = setTimeout(() => {
@@ -63,9 +65,8 @@ useEffect(()=>{
     .then(response => {
       if(response.status!==401 ||response.status!==520 ||response.status!==402 ){
        console.log(response.data)
+        
 
-// password: "123456"
-// username: "1234"
         axios.post('http://localhost:3333/user/login', {username:response.data.username,password:response.data.password}, {
               headers: {
                 'Content-Type': 'application/json',
@@ -79,38 +80,55 @@ useEffect(()=>{
                  setFirstname(response.data.firstname)
                  localStorage.setItem('token', JSON.stringify(response.data.token));
                  localStorage.setItem('username', JSON.stringify(response.data.username));
-                
+                 setLoading(false)
                 }
               })
               .catch(error => {
                
                 console.error('Error:', error);
               });
+              
+                axios.get('http://localhost:3333/user/allUploadedCases',{
+                  params: {
+                      username: JSON.parse(localStorage.getItem('username'))
+                  }
+              })
+                    .then(response => {
+                      if(response.status!==401 ||response.status!==520 ){
+                        console.log('uploadedCases Fetched',response.status)
+                        setUploadeCases(response.data)
+                        
+                        
+                          }
+                    })
+                    .catch(error => {
+                      if(error.response){
+                                  console.error('Error:', error);
+                                  
+                          
+                      }
+                    })
+             
       }
     })
     .catch(error => {
-      
+      setLoading(false)
       console.error('Error:', error);
     });
     
   
 },
-[])
+[loggedIn])
 
-  const scrollToSection = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-        // const screenWidth = window.innerWidth;
-        // if (reference.current) {
-        //   if (screenWidth >= 750) {
-        //     reference.current.style.display = 'flex';
-        //   } else {
-        //     reference.current.style.display = 'none';
-        //   }
-        // }
-       
-    }
+const scrollToSection = (id) => {
+  console.log("Scrolling to ID:", id); // Log the ID parameter
+  const element = document.getElementById(id);
+  if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+  } else {
+      console.error(`Element with ID ${id} not found in the DOM.`);
+      // Handle the situation where the element doesn't exist
+  }
 };
 
 const scrollToTop = () => {
@@ -178,7 +196,7 @@ const scrollToTop = () => {
   // }, [reference])
   return (
 <BrowserRouter>
-   <Navbar  setNext={setNext} setVerify={setVerify} setnext2={setnext2} setLoggedIn =  {setLoggedIn} setType={setType} firstname = {firstname} loggedIn = {loggedIn} scrollToSection={scrollToSection} scrollToTop={scrollToTop} />
+   <Navbar loading={loading} uploadedCases={uploadedCases} setNext={setNext} setVerify={setVerify} setnext2={setnext2} setLoggedIn =  {setLoggedIn} setType={setType} firstname = {firstname} loggedIn = {loggedIn} scrollToSection={scrollToSection} scrollToTop={scrollToTop} />
 
 
 <Routes>
@@ -186,7 +204,7 @@ const scrollToTop = () => {
     <>
    {/* <Navbar  setNext={setNext} setVerify={setVerify} setnext2={setnext2} setLoggedIn =  {setLoggedIn} setType={setType} firstname = {firstname} loggedIn = {loggedIn} scrollToSection={scrollToSection} scrollToTop={scrollToTop} reference={reference}/> */}
    <Landing />
-   <MainSection  styles={{ opacity: mainSectionOpacity }} isLoggedIn={loggedIn}/>
+   <MainSection  isLoggedIn={loggedIn}/>
    {/* <Row styles={{paddingTop:'50px',paddingBottom:'50px',opacity: rowSectionOpacity }} >
               <Column>
               <img src={process.env.PUBLIC_URL + '/Assets/logo/logo.png'} alt="logo"/>
@@ -366,7 +384,7 @@ const scrollToTop = () => {
 <Route path="/login" element={
     <>
     {/* <Navbar  setNext={setNext} setVerify={setVerify} setnext2={setnext2} setLoggedIn =  {setLoggedIn} setType={setType} firstname = {firstname} loggedIn = {loggedIn} scrollToSection={scrollToSection} scrollToTop={scrollToTop} reference={reference}/> */}
-   <LoginSignup setLoggedIn = {setLoggedIn} type={'Login'} setForgetPass = {setForgetPass} setfirstname = {setFirstname} firstname = {firstname}/>
+   <LoginSignup setUploadeCases={setUploadeCases} setLoggedIn = {setLoggedIn} type={'Login'} setForgetPass = {setForgetPass} setfirstname = {setFirstname} firstname = {firstname}/>
    {/* <Row styles={{paddingTop:'50px',paddingBottom:'50px' }} >
               <Column>
               <img src={process.env.PUBLIC_URL + '/Assets/logo/logo.png'} alt="logo"/>
@@ -512,11 +530,18 @@ const scrollToTop = () => {
     </>
   }/>
 
+<Route  path={`/dummy`} element={
+    <>
+    {/* <Navbar  setNext={setNext} setVerify={setVerify} setnext2={setnext2} setLoggedIn =  {setLoggedIn} setType={setType} firstname = {firstname} loggedIn = {loggedIn} scrollToSection={scrollToSection} scrollToTop={scrollToTop} reference={reference}/> */}
+  <DummyComponent/>
+       </>
+  }/>
+
 </Routes>
 <Row styles={{paddingTop:'50px',paddingBottom:'50px' }} >
               <Column>
               <img src={process.env.PUBLIC_URL + '/Assets/logo/logo.png'} alt="logo"/>
-              <p style={{fontFamily:'cursive'}}>Solution to find missing ones and also a way to help others for finding their missing ones because together we can make this earth a better place..</p>
+              <p style={{fontSize:'17px'}}>Solution to find missing ones and also a way to help others for finding their missing ones because together we can make this earth a better place..</p>
               </Column>
               <Column>
               <h2 style={{fontWeight:'bold',marginBottom:'10px',color:'white'}}>Contacts</h2>
@@ -525,9 +550,9 @@ const scrollToTop = () => {
               </Column>
               <Column>
               <h2 style={{fontWeight:'bold',marginBottom:'10px',color:'white'}}>Links</h2>
-              <p><Link onClick={()=>{scrollToTop();scrollToSection(`/`);}} style={{textDecoration:'none',color:'aliceblue'}} to={'/'}>Home</Link></p>
-              <p><Link onClick={()=>{scrollToTop();scrollToSection(`ourApp`);}} style={{textDecoration:'none',color:'aliceblue'}} to={'/ourApp'}>Our App</Link></p>
-              <p><Link onClick={()=>{scrollToTop();scrollToSection(`about`);}} style={{textDecoration:'none',color:'aliceblue'}} to={'/about'}>About us</Link></p>
+              <p><Link onClick={()=>{scrollToTop()}} style={{textDecoration:'none',color:'aliceblue'}} to={'/'}>Home</Link></p>
+              <p><Link onClick={()=>{scrollToTop()}} style={{textDecoration:'none',color:'aliceblue'}} to={'/ourApp'}>Our App</Link></p>
+              <p><Link onClick={()=>{scrollToTop()}} style={{textDecoration:'none',color:'aliceblue'}} to={'/about'}>About us</Link></p>
               </Column>
               <Column>
               <Input placeholder="Type any Query..." sx={{marginTop:'20px',color:'white'}}/>

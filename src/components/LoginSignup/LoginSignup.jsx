@@ -13,7 +13,7 @@ import style from './LoginSignup.module.css';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-export default function LoginSignup({type,setForgetPass,setLoggedIn,firstname,setfirstname}) {
+export default function LoginSignup({setUploadeCases,type,setForgetPass,setLoggedIn,firstname,setfirstname}) {
   const [isResponseSubmitted,setIsResponseSubmitted] = useState(false);
   const [isResponseErrored,setIsResponseErrored] = useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
@@ -251,7 +251,26 @@ useEffect(()=>{
                  localStorage.setItem('token', JSON.stringify(response.data.token));
                  localStorage.setItem('username', JSON.stringify(response.data.username));
                  localStorage.setItem('firstname', JSON.stringify(response.data.firstname));
-                 
+                 axios.get('http://localhost:3333/user/allUploadedCases',{
+                  params: {
+                      username: JSON.parse(localStorage.getItem('username'))
+                  }
+              })
+                    .then(response => {
+                      if(response.status!==401 ||response.status!==520 ){
+                        console.log('uploadedCases Fetched',response.status)
+                        setUploadeCases(response.data)
+                        
+                        
+                          }
+                    })
+                    .catch(error => {
+                      if(error.response){
+                                  console.error('Error:', error);
+                                  
+                          
+                      }
+                    })
                 }
               })
               .catch(error => {
@@ -283,6 +302,27 @@ useEffect(()=>{
                    localStorage.setItem('username', JSON.stringify(response.data.username));
                    
                  localStorage.setItem('firstname', JSON.stringify(response.data.firstname));
+
+                 axios.get('http://localhost:3333/user/allUploadedCases',{
+                  params: {
+                      username: JSON.parse(localStorage.getItem('username'))
+                  }
+              })
+                    .then(response => {
+                      if(response.status!==401 ||response.status!==520 ){
+                        console.log('uploadedCases Fetched',response.status)
+                        setUploadeCases(response.data)
+                        
+                        
+                          }
+                    })
+                    .catch(error => {
+                      if(error.response){
+                                  console.error('Error:', error);
+                                  
+                          
+                      }
+                    })
                   }
                 })
                 .catch(error => {

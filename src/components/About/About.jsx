@@ -3,7 +3,7 @@ import style from './About.module.css'
 export default function About() {
   return (
     <div className={style.mainDiv}>
-      <img className={style.logo} src={process.env.PUBLIC_URL + '/Assets/logo/logo.png'} alt="mobile pic" />
+      <img className={style.logo} src={process.env.PUBLIC_URL + '/Assets/logo/logo2.png'} alt="mobile pic" />
       <h1>About us</h1>
        
       <h3>Welcome to find2Gether, a groundbreaking AI-powered application dedicated to the noble cause of reuniting loved ones and fostering a sense of community for the betterment of humanity. In the palm of your hand, our innovative solution empowers users to make a difference by locating missing individuals through the use of their devices.</h3>
